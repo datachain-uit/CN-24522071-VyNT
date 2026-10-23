@@ -1,0 +1,6 @@
+# Chia tập theo seed: mỗi seed <-> một chuỗi job (thời điểm đến, loại query, kích thước dữ liệu).
+# Trainer của spark-sched-sim dùng seed = trainer.seed + k (k tăng dần) => luôn nằm trong dải train.
+# Dải val/test đặt rất xa dải train để không bao giờ trùng (tests/test_splits.py kiểm tra điều này).
+train: {start: 0,       count: 1000000}
+val:   {start: 1000000, count: 20}     # chọn siêu tham số (alpha của Weighted-Fair), chọn checkpoint
+test:  {start: 2000000, count: 50}     # CHỈ dùng một lần cho bảng kết quả cuối cùng

@@ -1,0 +1,79 @@
+--- a/trainers/trainer.py	2026-10-21 08:42:48.995947923 +0000
++++ b/trainers/trainer.py	2026-10-21 09:10:06.672729093 +0000
+@@ -94,11 +94,18 @@
+ 
+         # every n'th iteration, save the best model from the past n iterations,
+         # where `n = self.model_save_freq`
+-        best_state = None
++        print("Beginning training.\n", flush=True)
+ 
+-        exception: Exception | None = None
++        # [rlsched patch] try/finally: luôn dừng các tiến trình rollout, tránh treo khi có lỗi
++        try:
++            self._train_loop()
++        finally:
++            self._cleanup()
+ 
+-        print("Beginning training.\n", flush=True)
++    def _train_loop(self) -> None:
++        best_state = None
++        exception: Exception | None = None
++        i = -1
+ 
+         for i in range(self.num_iterations):
+             state_dict = deepcopy(self.scheduler.state_dict())
+@@ -112,10 +119,11 @@
+ 
+             # gather
+             results = []
+-            for i, conn in enumerate(self.conns):
++            # [rlsched patch] đổi tên biến lặp: upstream dùng lại `i` làm hỏng chỉ số vòng lặp
++            for rank, conn in enumerate(self.conns):
+                 res = conn.recv()
+                 if isinstance(res, Exception):
+-                    print(f"An exception occured in process {i}", flush=True)
++                    print(f"An exception occured in process {rank}", flush=True)
+                     exception = res
+                     break
+                 results += [res]
+@@ -156,7 +164,9 @@
+                 flush=True,
+             )
+ 
+-        self._cleanup()
++        # [rlsched patch] lưu checkpoint cuối nếu còn trạng thái chưa được lưu
++        if best_state is not None and i >= 0:
++            self._checkpoint(i, best_state)
+ 
+         if exception:
+             raise exception
+@@ -255,7 +265,7 @@
+ 
+     def _checkpoint(self, i: int, best_state: dict) -> None:
+         dir = osp.join(self.checkpointing_dir, f"{i+1}")
+-        os.mkdir(dir)
++        os.makedirs(dir, exist_ok=True)  # [rlsched patch]
+         best_sd = best_state.pop("state_dict")
+         torch.save(best_sd, osp.join(dir, "model.pt"))
+         with open(osp.join(dir, "state.json"), "w") as fp:
+@@ -296,11 +306,18 @@
+             proc.join(5)
+ 
+     def _terminate_rollout_workers(self) -> None:
++        # [rlsched patch] dừng worker an toàn kể cả khi worker đã chết
+         for conn in self.conns:
+-            conn.send(None)
++            try:
++                conn.send(None)
++            except (BrokenPipeError, EOFError, OSError):
++                pass
+ 
+         for proc in self.procs:
+-            proc.join()
++            proc.join(timeout=30)
++            if proc.is_alive():
++                proc.terminate()
++                proc.join()
+ 
+     def _write_stats(
+         self,

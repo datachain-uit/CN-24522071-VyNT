@@ -1,0 +1,28 @@
+# Chạy thử pipeline huấn luyện (1–3 phút trên CPU). KHÔNG dùng để báo cáo kết quả.
+env_config: configs/env/tpch_debug.yaml
+env:
+  mean_time_limit: 2.0e+7        # ms; StochasticTimeLimit lấy mẫu giới hạn thời gian mỗi episode huấn luyện
+trainer:
+  trainer_cls: PPO
+  device: cpu
+  num_iterations: 2
+  num_sequences: 1               # số chuỗi job khác nhau mỗi vòng lặp
+  num_rollouts: 2                # số rollout trên mỗi chuỗi job (baseline tính theo từng chuỗi -> giảm phương sai)
+  seed: 0                        # bị ghi đè bởi --seed trong scripts/04_train_decima.py
+  artifacts_dir: results/train/decima_smoke/seed0
+  checkpointing_freq: 1
+  use_tensorboard: false
+  num_epochs: 3
+  num_batches: 10
+  clip_range: 0.2
+  target_kl: 0.01
+  entropy_coeff: 0.04
+  beta_discount: 5.0e-3
+  opt_cls: Adam
+  opt_kwargs: {lr: 3.0e-4}
+  max_grad_norm: 0.5
+agent:
+  agent_cls: DecimaScheduler
+  embed_dim: 16
+  gnn_mlp_kwargs: {hid_dims: [32, 16], act_cls: LeakyReLU, act_kwargs: {inplace: true, negative_slope: 0.2}}
+  policy_mlp_kwargs: {hid_dims: [64, 64], act_cls: Tanh}

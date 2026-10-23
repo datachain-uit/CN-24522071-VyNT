@@ -1,0 +1,10 @@
+# Phần lõi: mô phỏng + heuristic + đánh giá + thống kê (KHÔNG cần torch). Python 3.10 hoặc 3.11.
+numpy==1.26.0
+scipy==1.11.2
+pandas==2.1.1
+matplotlib==3.8.0
+networkx==3.1
+gymnasium==0.29.1
+PyYAML==6.0.1
+tqdm==4.66.1
+pytest==7.4.2

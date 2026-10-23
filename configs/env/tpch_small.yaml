@@ -1,0 +1,9 @@
+# Cấu hình chính cho MVP trên laptop: 10 executor, 50 job, tải đề nghị ~0.85 (job đến liên tục).
+# job_arrival_rate tính từ scripts/01_eda_tpch.py (results/eda/arrival_rate_for_load.csv).
+name: tpch_small
+num_executors: 10
+job_arrival_cap: 50
+job_arrival_rate: 9.56e-6     # IAT trung bình ~104.6 s
+moving_delay: 2000.0
+warmup_delay: 1000.0
+data_sampler_cls: TPCHDataSampler

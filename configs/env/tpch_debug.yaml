@@ -1,0 +1,8 @@
+# Cấu hình rất nhỏ cho kiểm thử nhanh (vài giây/episode). Tải đề nghị ~3.6 (quá tải, giống "burst").
+name: tpch_debug
+num_executors: 10
+job_arrival_cap: 20
+job_arrival_rate: 4.0e-5      # 1/ms -> khoảng cách đến trung bình 25 s
+moving_delay: 2000.0          # ms, thời gian chuyển executor giữa các job
+warmup_delay: 1000.0          # ms, chậm thêm ở task đầu tiên của executor vừa rảnh/vừa chuyển
+data_sampler_cls: TPCHDataSampler

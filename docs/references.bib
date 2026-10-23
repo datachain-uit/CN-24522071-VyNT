@@ -1,0 +1,571 @@
+% =====================================================================================
+% Tài liệu tham khảo đã kiểm chứng (21/10/2026) cho đề tài RL lập lịch DAG job trên cluster.
+% Nguồn kiểm chứng: DBLP, Crossref, trang nhà xuất bản; xếp hạng hội nghị CORE2023/ICORE2026,
+% tạp chí SJR (SCImago). Trường có ghi "cần kiểm chứng" phải tự kiểm tra lại trước khi nộp bài.
+% Nhãn: [PREPRINT] chỉ có arXiv; [WORKSHOP]; [SOFTWARE]; [THESIS]; [SHORT] bài ngắn.
+% =====================================================================================
+
+% ------------------------------- Paper gốc và baseline cùng bài toán -------------------
+@inproceedings{DBLP:conf/sigcomm/MaoSVMA19,
+  author    = {Hongzi Mao and Malte Schwarzkopf and Shaileshh Bojja Venkatakrishnan and Zili Meng and Mohammad Alizadeh},
+  title     = {Learning scheduling algorithms for data processing clusters},
+  booktitle = {Proceedings of the {ACM} Special Interest Group on Data Communication, {SIGCOMM} 2019, Beijing, China, August 19-23, 2019},
+  pages     = {270--288},
+  publisher = {{ACM}},
+  year      = {2019},
+  doi       = {10.1145/3341302.3342080}
+}
+
+@article{DBLP:journals/network/DuanW21,
+  author  = {Yubin Duan and Jie Wu},
+  title   = {Improving Learning-Based {DAG} Scheduling by Inserting Deliberate Idle Slots},
+  journal = {{IEEE} Network},
+  volume  = {35},
+  pages   = {133--139},
+  year    = {2021},
+  doi     = {10.1109/MNET.001.2100231}
+}
+
+@inproceedings{wu2024netllm,
+  author    = {Duo Wu and Xianda Wang and Yaqi Qiao and Zhi Wang and Junchen Jiang and Shuguang Cui and Fangxin Wang},
+  title     = {{NetLLM}: Adapting Large Language Models for Networking},
+  booktitle = {Proceedings of the {ACM} {SIGCOMM} 2024 Conference},
+  pages     = {661--678},
+  year      = {2024},
+  doi       = {10.1145/3651890.3672268}
+}
+
+@article{DBLP:journals/tsc/LiCGZSAMYJ25,
+  author  = {Qing Li and Xing-Chi Chen and Jiawei Guo and Fa Zhu and Achyut Shankar and Fayez Alqahtani and Kamalakanta Muduli and Bo Yi and Yong Jiang},
+  title   = {{MPDA}: A Massively Parallel Learning and Dependency-Aware Scheduling Algorithm for Data Processing Clusters},
+  journal = {{IEEE} Transactions on Services Computing},
+  volume  = {18},
+  pages   = {3038--3051},
+  year    = {2025},
+  doi     = {10.1109/TSC.2025.3592427},
+  note    = {Chi tiết thiết lập (mô hình job đến, thuật toán RL, mã nguồn): cần kiểm chứng trên bản toàn văn}
+}
+
+@inproceedings{lechowicz2025pcaps,
+  author    = {Adam Lechowicz and Rohan Shenoy and Noman Bashir and Mohammad Hajiesmaili and Adam Wierman and Christina Delimitrou},
+  title     = {Carbon- and Precedence-Aware Scheduling for Data Processing Clusters},
+  booktitle = {Proceedings of the {ACM} {SIGCOMM} 2025 Conference},
+  pages     = {1241--1244},
+  year      = {2025},
+  doi       = {10.1145/3718958.3750478},
+  note      = {[SHORT] Bản đầy đủ: arXiv:2502.09717}
+}
+
+@inproceedings{DBLP:conf/mdm/ZhouLLYZY22,
+  author    = {Yunfan Zhou and Xijun Li and Jinhong Luo and Mingxuan Yuan and Jia Zeng and Jianguo Yao},
+  title     = {Learning to Optimize {DAG} Scheduling in Heterogeneous Environment},
+  booktitle = {23rd {IEEE} International Conference on Mobile Data Management ({MDM})},
+  pages     = {137--146},
+  year      = {2022},
+  doi       = {10.1109/MDM55031.2022.00040},
+  note      = {Tên gọi khác: Lachesis (arXiv:2103.06980)}
+}
+
+@inproceedings{sabek2022lsched,
+  author    = {Ibrahim Sabek and Tenzin Samten Ukyab and Tim Kraska},
+  title     = {{LSched}: A Workload-Aware Learned Query Scheduler for Analytical Database Systems},
+  booktitle = {Proceedings of the 2022 International Conference on Management of Data ({SIGMOD})},
+  pages     = {1228--1242},
+  publisher = {{ACM}},
+  year      = {2022},
+  doi       = {10.1145/3514221.3526158}
+}
+
+@inproceedings{zhu2025llmsched,
+  author    = {Botao Zhu and Chen Chen and Xiaoyi Fan and Yifei Zhu},
+  title     = {{LLMSched}: Uncertainty-Aware Workload Scheduling for Compound {LLM} Applications},
+  booktitle = {45th {IEEE} International Conference on Distributed Computing Systems ({ICDCS})},
+  pages     = {527--537},
+  year      = {2025},
+  doi       = {10.1109/ICDCS63083.2025.00058}
+}
+
+% ------------------------------- Liên quan, khác thiết lập ------------------------------
+@article{DBLP:journals/tpds/IslamKB22,
+  author  = {Muhammed Tawfiqul Islam and Shanika Karunasekera and Rajkumar Buyya},
+  title   = {Performance and Cost-Efficient Spark Job Scheduling Based on Deep Reinforcement Learning in Cloud Computing Environments},
+  journal = {{IEEE} Transactions on Parallel and Distributed Systems},
+  volume  = {33},
+  number  = {7},
+  pages   = {1695--1710},
+  year    = {2022},
+  doi     = {10.1109/TPDS.2021.3124670}
+}
+
+@inproceedings{grinsztajn2021readys,
+  author    = {Nathan Grinsztajn and Olivier Beaumont and Emmanuel Jeannot and Philippe Preux},
+  title     = {{READYS}: A Reinforcement Learning Based Strategy for Heterogeneous Dynamic Scheduling},
+  booktitle = {2021 {IEEE} International Conference on Cluster Computing ({CLUSTER})},
+  pages     = {70--81},
+  year      = {2021},
+  doi       = {10.1109/CLUSTER48925.2021.00031}
+}
+
+@inproceedings{wang2021bilevel,
+  author    = {Runzhong Wang and Zhigang Hua and Gan Liu and Jiayi Zhang and Junchi Yan and Feng Qi and Shuang Yang and Jun Zhou and Xiaokang Yang},
+  title     = {A Bi-Level Framework for Learning to Solve Combinatorial Optimization on Graphs},
+  booktitle = {Advances in Neural Information Processing Systems 34 ({NeurIPS})},
+  year      = {2021}
+}
+
+@inproceedings{zhang2023gflownet,
+  author    = {David W. Zhang and Corrado Rainone and Markus Peschl and Roberto Bondesan},
+  title     = {Robust Scheduling with {GFlowNets}},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year      = {2023},
+  url       = {https://openreview.net/forum?id=ZBUthI6wK9h}
+}
+
+@inproceedings{jeon2023oneshot,
+  author    = {Wonseok Jeon and Mukul Gagrani and Burak Bartan and Weiliang Will Zeng and Harris Teague and Piero Zappi and Christopher Lott},
+  title     = {Neural {DAG} Scheduling via One-Shot Priority Sampling},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year      = {2023},
+  url       = {https://openreview.net/forum?id=WL8FlAugqQ}
+}
+
+@inproceedings{qi2025oneshot,
+  author    = {Xumai Qi and Dongdong Zhang and Taotao Liu and Hongcheng Wang},
+  title     = {Reinforcement Learning for One-Shot {DAG} Scheduling with Comparability Identification and Dense Reward},
+  booktitle = {Advances in Neural Information Processing Systems 38 ({NeurIPS})},
+  year      = {2025}
+}
+
+@article{wu2022vegas,
+  author  = {Haoze Wu and Clark Barrett and Mahmood Sharif and Nina Narodytska and Gagandeep Singh},
+  title   = {Scalable Verification of {GNN}-Based Job Schedulers},
+  journal = {Proc. {ACM} Program. Lang.},
+  volume  = {6},
+  number  = {OOPSLA2},
+  pages   = {1036--1065},
+  year    = {2022},
+  doi     = {10.1145/3563325}
+}
+
+@article{DBLP:journals/tnsm/HuangWLHYZWD24,
+  author  = {Bin-Bin Huang and Ling-Bin Wang and Xiao Liu and Zixin Huang and Yu-Yu Yin and Fujin Zhu and Shang-Guang Wang and Shui-Guang Deng},
+  title   = {Reinforcement Learning-Based Online Scheduling of Multiple Workflows in Edge Environment},
+  journal = {{IEEE} Transactions on Network and Service Management},
+  volume  = {21},
+  pages   = {5691--5706},
+  year    = {2024},
+  doi     = {10.1109/TNSM.2024.3428496}
+}
+
+@article{DBLP:journals/tjs/ZhangXLXH24,
+  author  = {Zhen Zhang and Chen Xu and Kun Liu and Shaohua Xu and Long Huang},
+  title   = {A resource optimization scheduling model and algorithm for heterogeneous computing clusters based on {GNN} and {RL}},
+  journal = {The Journal of Supercomputing},
+  volume  = {80},
+  number  = {16},
+  pages   = {24138--24172},
+  year    = {2024},
+  doi     = {10.1007/s11227-024-06383-4}
+}
+
+@article{DBLP:journals/fgcs/WangZL26,
+  author  = {Lei Wang and Jiahao Zhou and Wangping Liu},
+  title   = {A learnable dynamic scheduling for directed graph jobs flow in heterogeneous supercomputing clusters},
+  journal = {Future Generation Computer Systems},
+  volume  = {175},
+  pages   = {108047},
+  year    = {2026},
+  doi     = {10.1016/j.future.2025.108047},
+  note    = {Nội dung phương pháp: cần kiểm chứng trên bản toàn văn}
+}
+
+@inproceedings{zhang2020l2d,
+  author    = {Cong Zhang and Wen Song and Zhiguang Cao and Jie Zhang and Puay Siew Tan and Chi Xu},
+  title     = {Learning to Dispatch for Job Shop Scheduling via Deep Reinforcement Learning},
+  booktitle = {Advances in Neural Information Processing Systems 33 ({NeurIPS})},
+  pages     = {1621--1632},
+  year      = {2020},
+  note      = {Thứ tự họ/tên tác giả cuối: cần kiểm chứng}
+}
+
+@inproceedings{jia2025crucible,
+  author    = {Lianchen Jia and Chaoyang Li and Qian Houde and Tianchi Huang and Jiangchuan Liu and Lifeng Sun},
+  title     = {Crucible: Quantifying the Potential of Control Algorithms through {LLM} Agents},
+  booktitle = {Advances in Neural Information Processing Systems 38 ({NeurIPS})},
+  year      = {2025}
+}
+
+% ------------------------------- Baseline kinh điển -------------------------------------
+@inproceedings{DBLP:conf/osdi/GrandlKRAK16,
+  author    = {Robert Grandl and Srikanth Kandula and Sriram Rao and Aditya Akella and Janardhan Kulkarni},
+  title     = {{GRAPHENE:} Packing and Dependency-Aware Scheduling for Data-Parallel Clusters},
+  booktitle = {12th {USENIX} Symposium on Operating Systems Design and Implementation, {OSDI} 2016, Savannah, GA, USA, November 2-4, 2016},
+  pages     = {81--97},
+  publisher = {{USENIX} Association},
+  year      = {2016}
+}
+
+@inproceedings{DBLP:conf/sigcomm/GrandlAKRA14,
+  author    = {Robert Grandl and Ganesh Ananthanarayanan and Srikanth Kandula and Sriram Rao and Aditya Akella},
+  title     = {Multi-resource packing for cluster schedulers},
+  booktitle = {{ACM} {SIGCOMM} 2014 Conference, Chicago, IL, USA, August 17-22, 2014},
+  pages     = {455--466},
+  publisher = {{ACM}},
+  year      = {2014},
+  doi       = {10.1145/2619239.2626334}
+}
+
+@inproceedings{hu2019spear,
+  author    = {Zhiming Hu and James Tu and Baochun Li},
+  title     = {Spear: Optimized Dependency-Aware Task Scheduling with Deep Reinforcement Learning},
+  booktitle = {2019 {IEEE} 39th International Conference on Distributed Computing Systems ({ICDCS})},
+  pages     = {2037--2046},
+  year      = {2019},
+  doi       = {10.1109/ICDCS.2019.00201}
+}
+
+@inproceedings{sun2020deepweave,
+  author    = {Penghao Sun and Zehua Guo and Junchao Wang and Junfei Li and Julong Lan and Yuxiang Hu},
+  title     = {{DeepWeave}: Accelerating Job Completion Time with Deep Reinforcement Learning-based Coflow Scheduling},
+  booktitle = {Proceedings of the 29th International Joint Conference on Artificial Intelligence ({IJCAI})},
+  pages     = {3314--3320},
+  year      = {2020},
+  doi       = {10.24963/ijcai.2020/458}
+}
+
+@inproceedings{DBLP:conf/hotnets/MaoAMK16,
+  author    = {Hongzi Mao and Mohammad Alizadeh and Ishai Menache and Srikanth Kandula},
+  title     = {Resource Management with Deep Reinforcement Learning},
+  booktitle = {Proceedings of the 15th {ACM} Workshop on Hot Topics in Networks, HotNets 2016, Atlanta, GA, USA, November 9-10, 2016},
+  pages     = {50--56},
+  publisher = {{ACM}},
+  year      = {2016},
+  doi       = {10.1145/3005745.3005750},
+  note      = {[WORKSHOP]}
+}
+
+@inproceedings{mao2019park,
+  author    = {Hongzi Mao and Parimarjan Negi and Akshay Narayan and Hanrui Wang and Jiacheng Yang and Haonan Wang and Ryan Marcus and Ravichandra Addanki and Mehrdad Khani Shirkoohi and Songtao He and Vikram Nathan and Frank Cangialosi and Shaileshh Bojja Venkatakrishnan and Wei-Hung Weng and Song Han and Tim Kraska and Mohammad Alizadeh},
+  title     = {Park: An Open Platform for Learning-Augmented Computer Systems},
+  booktitle = {Advances in Neural Information Processing Systems 32 ({NeurIPS})},
+  pages     = {2494--2506},
+  year      = {2019}
+}
+
+@article{DBLP:journals/tpds/TopcuogluHW02,
+  author  = {Haluk Topcuoglu and Salim Hariri and Min{-}You Wu},
+  title   = {Performance-Effective and Low-Complexity Task Scheduling for Heterogeneous Computing},
+  journal = {{IEEE} Trans. Parallel Distributed Syst.},
+  volume  = {13},
+  number  = {3},
+  pages   = {260--274},
+  year    = {2002},
+  doi     = {10.1109/71.993206}
+}
+
+@inproceedings{DBLP:conf/nsdi/GhodsiZHKSS10,
+  author    = {Ali Ghodsi and Matei Zaharia and Benjamin Hindman and Andy Konwinski and Scott Shenker and Ion Stoica},
+  title     = {Dominant Resource Fairness: Fair Allocation of Multiple Resource Types},
+  booktitle = {Proceedings of the 8th {USENIX} Symposium on Networked Systems Design and Implementation, {NSDI} 2011, Boston, MA, USA, March 30 - April 1, 2011},
+  publisher = {{USENIX} Association},
+  year      = {2011}
+}
+
+@inproceedings{DBLP:conf/eurosys/ZahariaBSESS10,
+  author    = {Matei Zaharia and Dhruba Borthakur and Joydeep Sen Sarma and Khaled Elmeleegy and Scott Shenker and Ion Stoica},
+  title     = {Delay scheduling: a simple technique for achieving locality and fairness in cluster scheduling},
+  booktitle = {Proceedings of the 5th European conference on Computer systems, EuroSys 2010, Paris, France, April 13-16, 2010},
+  pages     = {265--278},
+  publisher = {{ACM}},
+  year      = {2010},
+  doi       = {10.1145/1755913.1755940}
+}
+
+% ------------------------------- Nền tảng lý thuyết -------------------------------------
+@book{DBLP:books/lib/SuttonB2018,
+  author    = {Richard S. Sutton and Andrew G. Barto},
+  title     = {Reinforcement Learning: An Introduction},
+  edition   = {2nd},
+  publisher = {{MIT} Press},
+  year      = {2018},
+  isbn      = {978-0-262-03924-6}
+}
+
+@article{DBLP:journals/ml/Williams92,
+  author  = {Ronald J. Williams},
+  title   = {Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning},
+  journal = {Mach. Learn.},
+  volume  = {8},
+  number  = {3-4},
+  pages   = {229--256},
+  year    = {1992},
+  doi     = {10.1007/BF00992696}
+}
+
+@article{DBLP:journals/corr/SchulmanWDRK17,
+  author  = {John Schulman and Filip Wolski and Prafulla Dhariwal and Alec Radford and Oleg Klimov},
+  title   = {Proximal Policy Optimization Algorithms},
+  journal = {CoRR},
+  volume  = {abs/1707.06347},
+  year    = {2017},
+  note    = {[PREPRINT] arXiv:1707.06347}
+}
+
+@inproceedings{DBLP:journals/corr/SchulmanMLJA15,
+  author    = {John Schulman and Philipp Moritz and Sergey Levine and Michael I. Jordan and Pieter Abbeel},
+  title     = {High-Dimensional Continuous Control Using Generalized Advantage Estimation},
+  booktitle = {4th International Conference on Learning Representations, {ICLR} 2016, San Juan, Puerto Rico, May 2-4, 2016},
+  year      = {2016}
+}
+
+@inproceedings{DBLP:conf/iclr/EngstromISTJRM20,
+  author    = {Logan Engstrom and Andrew Ilyas and Shibani Santurkar and Dimitris Tsipras and Firdaus Janoos and Larry Rudolph and Aleksander Madry},
+  title     = {Implementation Matters in Deep {RL:} {A} Case Study on {PPO} and {TRPO}},
+  booktitle = {8th International Conference on Learning Representations, {ICLR} 2020},
+  publisher = {OpenReview.net},
+  year      = {2020},
+  url       = {https://openreview.net/forum?id=r1etN1rtPB}
+}
+
+@inproceedings{DBLP:conf/iclr/AndrychowiczRSO21,
+  author    = {Marcin Andrychowicz and Anton Raichuk and Piotr Stanczyk and Manu Orsini and Sertan Girgin and Rapha{\"{e}}l Marinier and L{\'{e}}onard Hussenot and Matthieu Geist and Olivier Pietquin and Marcin Michalski and Sylvain Gelly and Olivier Bachem},
+  title     = {What Matters for On-Policy Deep Actor-Critic Methods? {A} Large-Scale Study},
+  booktitle = {9th International Conference on Learning Representations, {ICLR} 2021},
+  publisher = {OpenReview.net},
+  year      = {2021},
+  url       = {https://openreview.net/forum?id=nIAxjsniDzg}
+}
+
+@inproceedings{DBLP:conf/iclr/MaoVSA19,
+  author    = {Hongzi Mao and Shaileshh Bojja Venkatakrishnan and Malte Schwarzkopf and Mohammad Alizadeh},
+  title     = {Variance Reduction for Reinforcement Learning in Input-Driven Environments},
+  booktitle = {7th International Conference on Learning Representations, {ICLR} 2019},
+  publisher = {OpenReview.net},
+  year      = {2019},
+  url       = {https://openreview.net/forum?id=Hyg1G2AqtQ}
+}
+
+@inproceedings{DBLP:conf/iclr/KipfW17,
+  author    = {Thomas N. Kipf and Max Welling},
+  title     = {Semi-Supervised Classification with Graph Convolutional Networks},
+  booktitle = {5th International Conference on Learning Representations, {ICLR} 2017},
+  publisher = {OpenReview.net},
+  year      = {2017},
+  url       = {https://openreview.net/forum?id=SJU4ayYgl}
+}
+
+@inproceedings{DBLP:conf/iclr/VelickovicCCRLB18,
+  author    = {Petar Veli{\v{c}}kovi{\'{c}} and Guillem Cucurull and Arantxa Casanova and Adriana Romero and Pietro Li{\`{o}} and Yoshua Bengio},
+  title     = {Graph Attention Networks},
+  booktitle = {6th International Conference on Learning Representations, {ICLR} 2018},
+  publisher = {OpenReview.net},
+  year      = {2018},
+  url       = {https://openreview.net/forum?id=rJXMpikCZ}
+}
+
+@inproceedings{DBLP:conf/iclr/XuHLJ19,
+  author    = {Keyulu Xu and Weihua Hu and Jure Leskovec and Stefanie Jegelka},
+  title     = {How Powerful are Graph Neural Networks?},
+  booktitle = {7th International Conference on Learning Representations, {ICLR} 2019},
+  publisher = {OpenReview.net},
+  year      = {2019},
+  url       = {https://openreview.net/forum?id=ryGs6iA5Km}
+}
+
+@article{DBLP:journals/siamam/Graham69,
+  author  = {Ronald L. Graham},
+  title   = {Bounds on Multiprocessing Timing Anomalies},
+  journal = {{SIAM} Journal on Applied Mathematics},
+  volume  = {17},
+  number  = {2},
+  pages   = {416--429},
+  year    = {1969},
+  doi     = {10.1137/0117039}
+}
+
+@article{Little1961,
+  author  = {John D. C. Little},
+  title   = {A Proof for the Queuing Formula: {$L = \lambda W$}},
+  journal = {Operations Research},
+  volume  = {9},
+  number  = {3},
+  pages   = {383--387},
+  year    = {1961},
+  doi     = {10.1287/opre.9.3.383}
+}
+
+@book{DBLP:books/daglib/0076234,
+  author    = {Raj Jain},
+  title     = {The Art of Computer Systems Performance Analysis: Techniques for Experimental Design, Measurement, Simulation, and Modeling},
+  publisher = {Wiley},
+  year      = {1991},
+  isbn      = {978-0-471-50336-1}
+}
+
+% ------------------------------- Phương pháp thực nghiệm RL ------------------------------
+@inproceedings{DBLP:conf/aaai/0002IBPPM18,
+  author    = {Peter Henderson and Riashat Islam and Philip Bachman and Joelle Pineau and Doina Precup and David Meger},
+  title     = {Deep Reinforcement Learning That Matters},
+  booktitle = {Proceedings of the Thirty-Second {AAAI} Conference on Artificial Intelligence ({AAAI-18})},
+  pages     = {3207--3214},
+  publisher = {{AAAI} Press},
+  year      = {2018},
+  doi       = {10.1609/aaai.v32i1.11694}
+}
+
+@inproceedings{DBLP:conf/nips/AgarwalSCCB21,
+  author    = {Rishabh Agarwal and Max Schwarzer and Pablo Samuel Castro and Aaron C. Courville and Marc G. Bellemare},
+  title     = {Deep Reinforcement Learning at the Edge of the Statistical Precipice},
+  booktitle = {Advances in Neural Information Processing Systems 34 ({NeurIPS} 2021)},
+  pages     = {29304--29320},
+  year      = {2021}
+}
+
+@article{DBLP:journals/jmlr/PattersonNW024,
+  author  = {Andrew Patterson and Samuel Neumann and Martha White and Adam White},
+  title   = {Empirical Design in Reinforcement Learning},
+  journal = {J. Mach. Learn. Res.},
+  volume  = {25},
+  pages   = {318:1--318:63},
+  year    = {2024},
+  url     = {https://jmlr.org/papers/v25/23-0183.html}
+}
+
+@article{DBLP:journals/jair/KirkZGR23,
+  author  = {Robert Kirk and Amy Zhang and Edward Grefenstette and Tim Rockt{\"{a}}schel},
+  title   = {A Survey of Zero-shot Generalisation in Deep Reinforcement Learning},
+  journal = {J. Artif. Intell. Res.},
+  volume  = {76},
+  pages   = {201--264},
+  year    = {2023},
+  doi     = {10.1613/jair.1.14174}
+}
+
+% ------------------------------- Survey --------------------------------------------------
+@article{DBLP:journals/air/ZhouTBXS24,
+  author  = {Guangyao Zhou and Wenhong Tian and Rajkumar Buyya and Ruini Xue and Liang Song},
+  title   = {Deep reinforcement learning-based methods for resource scheduling in cloud computing: a review and future directions},
+  journal = {Artif. Intell. Rev.},
+  volume  = {57},
+  number  = {5},
+  pages   = {124},
+  year    = {2024},
+  doi     = {10.1007/s10462-024-10756-9}
+}
+
+@article{DBLP:journals/kais/AbadiMJ24,
+  author  = {Zahra Jalali Khalil Abadi and Najme Mansouri and Mohammad Masoud Javidi},
+  title   = {Deep reinforcement learning-based scheduling in distributed systems: a critical review},
+  journal = {Knowl. Inf. Syst.},
+  volume  = {66},
+  number  = {10},
+  pages   = {5709--5782},
+  year    = {2024},
+  doi     = {10.1007/s10115-024-02167-7}
+}
+
+% ------------------------------- Hệ thống, dữ liệu, công cụ ------------------------------
+@inproceedings{DBLP:conf/nsdi/ZahariaCDDMMFSS12,
+  author    = {Matei Zaharia and Mosharaf Chowdhury and Tathagata Das and Ankur Dave and Justin Ma and Murphy McCauley and Michael J. Franklin and Scott Shenker and Ion Stoica},
+  title     = {Resilient Distributed Datasets: {A} Fault-Tolerant Abstraction for In-Memory Cluster Computing},
+  booktitle = {Proceedings of the 9th {USENIX} Symposium on Networked Systems Design and Implementation, {NSDI} 2012},
+  pages     = {15--28},
+  publisher = {{USENIX} Association},
+  year      = {2012}
+}
+
+@article{DBLP:journals/cacm/ZahariaXWDADMRV16,
+  author  = {Matei Zaharia and Reynold S. Xin and Patrick Wendell and Tathagata Das and Michael Armbrust and Ankur Dave and Xiangrui Meng and Josh Rosen and Shivaram Venkataraman and Michael J. Franklin and Ali Ghodsi and Joseph Gonzalez and Scott Shenker and Ion Stoica},
+  title   = {Apache Spark: a unified engine for big data processing},
+  journal = {Commun. {ACM}},
+  volume  = {59},
+  number  = {11},
+  pages   = {56--65},
+  year    = {2016},
+  doi     = {10.1145/2934664}
+}
+
+@inproceedings{DBLP:conf/iwqos/GuoCWDFMB19,
+  author    = {Jing Guo and Zihao Chang and Sa Wang and Haiyang Ding and Yihui Feng and Liang Mao and Yungang Bao},
+  title     = {Who limits the resource efficiency of my datacenter: an analysis of Alibaba datacenter traces},
+  booktitle = {Proceedings of the International Symposium on Quality of Service, IWQoS 2019, Phoenix, AZ, USA, June 24-25, 2019},
+  pages     = {39:1--39:10},
+  publisher = {{ACM}},
+  year      = {2019},
+  doi       = {10.1145/3326285.3329074}
+}
+
+@inproceedings{DBLP:conf/cloud/TianZ019,
+  author    = {Huangshi Tian and Yunchuan Zheng and Wei Wang},
+  title     = {Characterizing and Synthesizing Task Dependencies of Data-Parallel Jobs in Alibaba Cloud},
+  booktitle = {Proceedings of the {ACM} Symposium on Cloud Computing, SoCC 2019, Santa Cruz, CA, USA, November 20-23, 2019},
+  pages     = {139--151},
+  publisher = {{ACM}},
+  year      = {2019},
+  doi       = {10.1145/3357223.3362710}
+}
+
+@inproceedings{DBLP:conf/eurosys/TirmaziBDHQHHW20,
+  author    = {Muhammad Tirmazi and Adam Barker and Nan Deng and Md E. Haque and Zhijing Gene Qin and Steven Hand and Mor Harchol{-}Balter and John Wilkes},
+  title     = {Borg: the next generation},
+  booktitle = {EuroSys '20: Fifteenth EuroSys Conference 2020, Heraklion, Greece, April 27-30, 2020},
+  pages     = {30:1--30:14},
+  publisher = {{ACM}},
+  year      = {2020},
+  doi       = {10.1145/3342195.3387517}
+}
+
+@misc{AlibabaClusterTraceV2018,
+  author       = {{Alibaba Group}},
+  title        = {Alibaba Cluster Trace Program: cluster-trace-v2018},
+  howpublished = {\url{https://github.com/alibaba/clusterdata/tree/master/cluster-trace-v2018}},
+  note         = {Truy cập 21/10/2026}
+}
+
+@manual{TPCH301,
+  title        = {{TPC} Benchmark {H} (Decision Support) Standard Specification, Revision 3.0.1},
+  organization = {Transaction Processing Performance Council ({TPC})},
+  year         = {2022},
+  url          = {https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf}
+}
+
+@inproceedings{DBLP:conf/nips/TowersKBCDGKKKP25,
+  author    = {Mark Towers and Ariel Kwiatkowski and John U. Balis and Gianluca De Cola and Tristan Deleu and Manuel Goul{\~{a}}o and Andreas Kallinteris and Markus Krimmel and Arjun KG and Rodrigo Perez{-}Vicente and J. K. Terry and Andrea Pierr{\'{e}} and Sander Schulhoff and Jun Jet Tai and Hannah Tan and Omar G. Younis},
+  title     = {Gymnasium: {A} Standard Interface for Reinforcement Learning Environments},
+  booktitle = {Advances in Neural Information Processing Systems 38 ({NeurIPS} 2025), Datasets and Benchmarks Track},
+  pages     = {163114--163129},
+  year      = {2025},
+  doi       = {10.52202/085713-4916}
+}
+
+@article{DBLP:journals/corr/abs-1903-02428,
+  author  = {Matthias Fey and Jan Eric Lenssen},
+  title   = {Fast Graph Representation Learning with {PyTorch Geometric}},
+  journal = {CoRR},
+  volume  = {abs/1903.02428},
+  year    = {2019},
+  note    = {[WORKSHOP] ICLR 2019 Workshop on Representation Learning on Graphs and Manifolds}
+}
+
+@misc{SparkSchedSim,
+  author       = {Arkadiy Gertsman},
+  title        = {spark-sched-sim: Apache Spark job scheduling simulator implemented as a Gymnasium environment},
+  howpublished = {\url{https://github.com/ArchieGertsman/spark-sched-sim}},
+  note         = {[SOFTWARE] MIT License, commit 2ba8d80. Truy cập 21/10/2026}
+}
+
+@mastersthesis{Gertsman2023,
+  author = {Arkadiy Gertsman},
+  title  = {A faster reinforcement learning approach to efficient job scheduling in Apache Spark},
+  school = {University of Illinois Urbana-Champaign},
+  year   = {2023},
+  url    = {https://hdl.handle.net/2142/121563},
+  note   = {[THESIS] không qua bình duyệt}
+}
+
+@misc{DecimaSim,
+  author       = {Hongzi Mao},
+  title        = {decima-sim: Simulator part of Decima ({SIGCOMM} '19)},
+  howpublished = {\url{https://github.com/hongzimao/decima-sim}},
+  note         = {[SOFTWARE] nguồn dữ liệu TPC-H DAG; repo không kèm tệp giấy phép}
+}

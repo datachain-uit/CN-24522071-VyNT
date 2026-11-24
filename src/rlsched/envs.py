@@ -38,10 +38,10 @@ def normalize_env_cfg(env_cfg: dict[str, Any]) -> dict[str, Any]:
     cfg.setdefault("data_sampler_cls", "TPCHDataSampler")
     missing = [k for k in REQUIRED_KEYS if k not in cfg]
     if missing:
-        raise KeyError(f"thiếu khóa cấu hình môi trường: {missing}")
+        raise KeyError(f"missing environment configuration keys: {missing}")
     if not cfg.get("job_arrival_cap"):
-        raise ValueError("Khi đánh giá phải đặt job_arrival_cap > 0 để mọi episode chạy tới khi hết job "
-                         "(tránh JCT bị cắt cụt/censored).")
+        raise ValueError("evaluation requires job_arrival_cap > 0 so every episode runs until all jobs finish "
+                         "(to avoid censored JCTs).")
     return cfg
 
 

@@ -1,11 +1,11 @@
-"""Bước 2 — Chạy các baseline heuristic trên một tập seed (mặc định: validation).
+"""Step 2 - Run heuristic baselines on a set of seeds (default: validation).
 
-Ví dụ:
+Examples:
     python scripts/02_run_baselines.py --env configs/env/tpch_small.yaml --split val
     python scripts/02_run_baselines.py --env configs/env/tpch_small.yaml --split val \
         --methods random fifo fair sjf_cp srpt_cp weighted_fair:alpha=-1
-Đầu ra: results/baselines/<env>_<split>/{episodes.csv, jobs.csv, summary.csv, meta.json}
-KHÔNG dùng --split test ở bước này (tập test chỉ dùng một lần ở scripts/06_evaluate.py).
+Output: results/baselines/<env>_<split>/{episodes.csv, jobs.csv, summary.csv, meta.json}
+Reserve the test split for a single run of scripts/06_evaluate.py. Do not use --split test here.
 """
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--env", required=True)
     ap.add_argument("--split", choices=["train", "val"], default="val")
-    ap.add_argument("--num-seeds", type=int, default=None, help="chỉ dùng n seed đầu của tập (chạy thử nhanh)")
+    ap.add_argument("--num-seeds", type=int, default=None, help="use the first n seeds in the split for a quick run")
     ap.add_argument("--methods", nargs="+", default=DEFAULT_METHODS)
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
@@ -52,7 +52,7 @@ def main() -> None:
         all_eps += eps
         all_jobs += jobs
         m = pd.DataFrame(eps)["avg_jct_s"]
-        print(f"{sched.name:<32} avg JCT = {m.mean():9.1f} ± {m.std(ddof=1):7.1f} s  (n={len(m)})")
+        print(f"{sched.name:<32} avg JCT = {m.mean():9.1f} +/- {m.std(ddof=1):7.1f} s  (n={len(m)})")
 
     eps_df, jobs_df = pd.DataFrame(all_eps), pd.DataFrame(all_jobs)
     eps_df.to_csv(out / "episodes.csv", index=False)
@@ -61,7 +61,7 @@ def main() -> None:
     summ.to_csv(out / "summary.csv", index=False)
     save_json(run_metadata(env=env_cfg, split=args.split, seeds=seeds, methods=args.methods), out / "meta.json")
     print(summ.round(2).to_string(index=False))
-    print(f"[baselines] đã ghi {out}")
+    print(f"[baselines] wrote results to {out}")
 
 
 if __name__ == "__main__":

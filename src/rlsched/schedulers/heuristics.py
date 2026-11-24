@@ -35,7 +35,7 @@ class _Base:
 
     def __init__(self, num_executors: int, **kwargs) -> None:
         if kwargs:
-            raise TypeError(f"{type(self).__name__}: tham số không hợp lệ {sorted(kwargs)}")
+            raise TypeError(f"{type(self).__name__}: invalid parameters {sorted(kwargs)}")
         self.num_executors = int(num_executors)
         self._env = None
         self._total_work_cache: dict[int, float] = {}
@@ -61,13 +61,13 @@ class _Base:
     # ------------------------------------------------------------------ tiện ích
     def _job_total_work(self, view: ObsView) -> np.ndarray:
         if self._env is None:
-            raise RuntimeError("biến thể dùng tổng work cần gọi bind_env(env) trước (run_episode tự làm việc này)")
+            raise RuntimeError("total-work variants require bind_env(env) first (run_episode calls it automatically)")
         from spark_sched_sim.data_samplers.tpch import TPCHDataSampler
 
         out = np.empty(view.num_jobs)
         ids = self._env.active_job_ids
         if len(ids) != view.num_jobs:
-            raise RuntimeError("số job trong quan sát không khớp với môi trường")
+            raise RuntimeError("job count in the observation differs from the environment")
         for j, job_id in enumerate(ids):
             if job_id not in self._total_work_cache:
                 job = self._env.jobs[job_id]
@@ -150,7 +150,7 @@ class WeightedFairPolicy(_PartitionPolicy):
                  work_conserving: bool = True) -> None:
         super().__init__(num_executors)
         if weight not in ("total", "remaining"):
-            raise ValueError("weight phải là 'total' hoặc 'remaining'")
+            raise ValueError("weight must be 'total' or 'remaining'")
         self.alpha = float(alpha)
         self.weight = weight
         self.work_conserving = bool(work_conserving)
@@ -171,7 +171,7 @@ class SJFCPPolicy(_Base):
     def __init__(self, num_executors: int, priority: str = "total", keep_local: bool = False) -> None:
         super().__init__(num_executors)
         if priority not in ("total", "remaining"):
-            raise ValueError("priority phải là 'total' hoặc 'remaining'")
+            raise ValueError("priority must be 'total' or 'remaining'")
         self.priority = priority
         self.keep_local = bool(keep_local)
         self.name = ("SJF-CP" if priority == "total" else "SRPT-CP") + ("(keep-local)" if keep_local else "")
@@ -210,5 +210,5 @@ REGISTRY = {
 def make_heuristic(name: str, num_executors: int, **kwargs):
     key = name.lower()
     if key not in REGISTRY:
-        raise KeyError(f"heuristic '{name}' không tồn tại; chọn một trong {sorted(REGISTRY)}")
+        raise KeyError(f"heuristic '{name}' does not exist. Choose from {sorted(REGISTRY)}")
     return REGISTRY[key](num_executors=num_executors, **kwargs)

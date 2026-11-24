@@ -1,10 +1,10 @@
-"""Bước 7 — Phân tích thống kê kết quả (bảng mean ± std, CI 95%, Wilcoxon + Holm, CDF).
+"""Step 7 - Analyze results (mean +/- std, 95% CI, Wilcoxon + Holm, CDF).
 
-Ví dụ:
+Example:
     python scripts/07_analyze.py --in results/final/tpch_small_test --reference Decima
-Phương pháp có nhiều seed huấn luyện (cột train_seed >= 0) được lấy trung bình theo seed huấn luyện cho
-từng episode test trước khi kiểm định; độ phân tán giữa các seed huấn luyện được báo cáo riêng.
-Đầu ra: <in>/analysis/{summary_*.csv, paired_*.csv, train_seed_spread.csv, report.md, *.png}
+For methods with multiple training seeds (train_seed >= 0), average across training seeds for each
+test episode before statistical testing. Report variation across training seeds separately.
+Output: <in>/analysis/{summary_*.csv, paired_*.csv, train_seed_spread.csv, report.md, *.png}
 """
 from __future__ import annotations
 
@@ -27,8 +27,8 @@ METRICS = ["avg_jct_s", "p95_jct_s", "makespan_s", "executor_utilization", "mean
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--in", dest="inp", required=True)
-    ap.add_argument("--reference", default=None, help="phương pháp đem so với các phương pháp còn lại "
-                                                       "(mặc định: phương pháp có avg JCT thấp nhất)")
+    ap.add_argument("--reference", default=None, help="reference method to compare with all other methods "
+                                                       "(default: method with the lowest avg JCT)")
     args = ap.parse_args()
     inp = Path(args.inp)
     out = inp / "analysis"
@@ -50,7 +50,7 @@ def main() -> None:
     # 2) gộp theo (algo, seed test): trung bình qua các seed huấn luyện
     agg = eps.groupby(["algo", "seed"])[METRICS].mean().reset_index().rename(columns={"algo": "method"})
 
-    lines = ["# Kết quả trên tập đánh giá", "", f"Nguồn: `{inp}`", ""]
+    lines = ["# Evaluation results", "", f"Source: `{inp}`", ""]
     for m in METRICS:
         s = summarize(agg, m)
         s.to_csv(out / f"summary_{m}.csv", index=False)
@@ -59,10 +59,10 @@ def main() -> None:
     ref = args.reference or s_main.iloc[0]["method"]
     paired = paired_compare(agg, ref, [m for m in s_main["method"] if m != ref], metric="avg_jct_s")
     paired.to_csv(out / f"paired_{ref.replace('/', '_')}.csv", index=False)
-    lines += [f"## So sánh ghép cặp: {ref} với từng baseline (avg JCT, Wilcoxon + Holm)", "",
-              df_to_markdown(paired, ".4f") if len(paired) else "(không có cặp nào)", ""]
+    lines += [f"## Paired comparisons: {ref} vs. each baseline (avg JCT, Wilcoxon + Holm)", "",
+              df_to_markdown(paired, ".4f") if len(paired) else "(no pairs to compare)", ""]
     if len(learned):
-        lines += ["## Độ phân tán giữa các seed huấn luyện (mean ± std của avg JCT)", "",
+        lines += ["## Variation across training seeds (mean +/- std of avg JCT)", "",
                   df_to_markdown(pd.read_csv(out / "train_seed_spread.csv"), ".2f"), ""]
     (out / "report.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -74,7 +74,7 @@ def main() -> None:
     print(s_main.round(2).to_string(index=False))
     if len(paired):
         print(paired.round(4).to_string(index=False))
-    print(f"[analyze] đã ghi {out}")
+    print(f"[analyze] wrote results to {out}")
 
 
 if __name__ == "__main__":

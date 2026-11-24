@@ -1,12 +1,12 @@
-"""Bước 1 — Phân tích dữ liệu (EDA) 154 job template TPC-H và hiệu chỉnh mức tải (offered load).
+"""Step 1 - Explore the 154 TPC-H job templates and calibrate the offered load.
 
-Đầu ra (results/eda/):
-  tpch_templates.csv        : mỗi dòng một (query, size): số stage, số task, tổng work, đường găng, độ sâu
-  tpch_by_size.csv          : thống kê theo kích thước dữ liệu
-  arrival_rate_for_load.csv : job_arrival_rate (1/ms) cần đặt để đạt mức tải mong muốn với N executor
-  *.png                     : biểu đồ phân phối
-Ghi chú: tải đề nghị rho = E[work]/(N*E[IAT]) chỉ là xấp xỉ; mức sử dụng thực tế còn phụ thuộc
-moving delay, warm-up, số wave và chính sách lập lịch -> đối chiếu với executor_utilization khi chạy baseline.
+Output (results/eda/):
+  tpch_templates.csv        : one row per (query, size) with stage count, task count, total work, critical path and depth
+  tpch_by_size.csv          : statistics by data size
+  arrival_rate_for_load.csv : job_arrival_rate (1/ms) for the target load with N executors
+  *.png                     : distribution plots
+Offered load rho = E[work]/(N*E[IAT]) is an approximation. Actual utilization also depends on
+moving delay, warm-up, wave count and scheduling policy. Compare it with executor_utilization in baseline runs.
 """
 from __future__ import annotations
 
@@ -56,29 +56,29 @@ def main() -> None:
                          "job_arrival_rate_per_ms": 1.0 / (iat_s * 1e3)})
     pd.DataFrame(rows).to_csv(out / "arrival_rate_for_load.csv", index=False)
 
-    print(f"[eda] {len(df)} template | số stage: {df.num_stages.min()}–{df.num_stages.max()} "
-          f"(TB {df.num_stages.mean():.1f}) | tổng work TB {mean_work:.0f} s (executor-giây)")
-    print(f"[eda] {top_frac:.0%} số template lớn nhất chiếm 80% tổng work (mức độ đuôi dài)")
+    print(f"[eda] {len(df)} templates | stages: {df.num_stages.min()}-{df.num_stages.max()} "
+          f"(mean {df.num_stages.mean():.1f}) | mean total work {mean_work:.0f} executor-seconds")
+    print(f"[eda] The largest {top_frac:.0%} of templates account for 80% of total work (long tail)")
     print(by_size.round(1).to_string())
     print(pd.DataFrame(rows).round(6).to_string(index=False))
 
     fig, axes = plt.subplots(1, 3, figsize=(13, 3.6))
     axes[0].hist(df["num_stages"], bins=range(1, int(df.num_stages.max()) + 2), color="#4C78A8")
-    axes[0].set_xlabel("Số stage mỗi job")
-    axes[0].set_ylabel("Số template")
+    axes[0].set_xlabel("Stages per job")
+    axes[0].set_ylabel("Number of templates")
     axes[1].boxplot([df.loc[df["size"] == s, "total_work_s"] for s in QUERY_SIZES], labels=QUERY_SIZES)
     axes[1].set_yscale("log")
-    axes[1].set_ylabel("Tổng work (executor-s, log)")
+    axes[1].set_ylabel("Total work (executor-s, log)")
     axes[2].scatter(df["total_work_s"], df["cp_work_s"], s=10, color="#F58518")
     axes[2].set_xscale("log")
     axes[2].set_yscale("log")
-    axes[2].set_xlabel("Tổng work (s)")
-    axes[2].set_ylabel("Work trên đường găng (s)")
+    axes[2].set_xlabel("Total work (s)")
+    axes[2].set_ylabel("Critical path work (s)")
     for ax in axes:
         ax.grid(alpha=0.3)
     fig.tight_layout()
     fig.savefig(out / "tpch_distributions.png", dpi=200)
-    print(f"[eda] đã ghi kết quả vào {out}")
+    print(f"[eda] wrote results to {out}")
 
 
 if __name__ == "__main__":

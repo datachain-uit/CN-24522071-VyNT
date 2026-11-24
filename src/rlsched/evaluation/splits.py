@@ -40,14 +40,14 @@ class Splits:
         pairs = [("train", "val"), ("train", "test"), ("val", "test")]
         for a, b in pairs:
             if self.get(a).overlaps(self.get(b)):
-                raise ValueError(f"dải seed '{a}' và '{b}' bị chồng lấn — vi phạm nguyên tắc tách tập")
+                raise ValueError(f"seed ranges '{a}' and '{b}' overlap across splits")
 
     def check_trainer_cfg(self, trainer_seed: int, num_iterations: int, num_sequences: int) -> None:
         """Seed lớn nhất mà trainer có thể dùng: seed + num_sequences * (num_iterations + 1)."""
         max_seed = trainer_seed + num_sequences * (num_iterations + 1)
         if trainer_seed < self.train.start or max_seed >= self.train.stop:
-            raise ValueError(f"seed huấn luyện [{trainer_seed}, {max_seed}] vượt ra ngoài dải train "
-                             f"[{self.train.start}, {self.train.stop}) — có nguy cơ trùng validation/test")
+            raise ValueError(f"training seeds [{trainer_seed}, {max_seed}] extend beyond the training range "
+                             f"[{self.train.start}, {self.train.stop}) and may overlap validation/test seeds")
 
 
 def load_splits(path: str = "configs/splits.yaml") -> Splits:

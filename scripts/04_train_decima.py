@@ -1,12 +1,12 @@
-"""Bước 4 — Huấn luyện lại Decima (PPO, spark-sched-sim) với một seed huấn luyện.
+"""Step 4 - Retrain Decima (PPO, spark-sched-sim) with one training seed.
 
-Ví dụ:
-    python scripts/04_train_decima.py --config configs/train/decima_smoke.yaml --seed 0       # chạy thử 1-2 phút
+Examples:
+    python scripts/04_train_decima.py --config configs/train/decima_smoke.yaml --seed 0       # 1-2 minute smoke test
     python scripts/04_train_decima.py --config configs/train/decima_small.yaml --seed 0       # MVP
     python scripts/04_train_decima.py --config configs/train/decima_small.yaml --seed 1 --pyg-fallback
-Mỗi seed huấn luyện s dùng trainer.seed = s * 100000 (dải seed chuỗi job riêng, nằm trong dải train của
-configs/splits.yaml). Kết quả: results/train/<config>/seed<s>/{checkpoints/, stdout/, tb/, config.yaml, meta.json}
-Nhật ký huấn luyện được ghi vào stdout/main.out (trainer của upstream chuyển hướng stdout).
+Each training seed s uses trainer.seed = s * 100000 for a separate range of job sequence seeds within
+the training range in configs/splits.yaml. Output: results/train/<config>/seed<s>/{checkpoints/, stdout/, tb/, config.yaml, meta.json}
+The upstream trainer redirects stdout to stdout/main.out for the training log.
 """
 from __future__ import annotations
 
@@ -32,9 +32,9 @@ SEED_STRIDE = 100_000
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--config", required=True)
-    ap.add_argument("--seed", type=int, default=0, help="chỉ số seed huấn luyện (0, 1, 2, ...)")
-    ap.add_argument("--iterations", type=int, default=None, help="ghi đè trainer.num_iterations")
-    ap.add_argument("--pyg-fallback", action="store_true", help="dùng bản thay thế torch_scatter/torch_sparse")
+    ap.add_argument("--seed", type=int, default=0, help="training seed index (0, 1, 2, ...)")
+    ap.add_argument("--iterations", type=int, default=None, help="override trainer.num_iterations")
+    ap.add_argument("--pyg-fallback", action="store_true", help="use the fallback for torch_scatter/torch_sparse")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
@@ -50,7 +50,7 @@ def main() -> None:
         tr["num_iterations"] = args.iterations
     tr["seed"] = args.seed * SEED_STRIDE
     if tr["num_sequences"] * (tr["num_iterations"] + 1) >= SEED_STRIDE:
-        raise SystemExit("num_sequences*(num_iterations+1) vượt SEED_STRIDE — tăng SEED_STRIDE")
+        raise SystemExit("num_sequences*(num_iterations+1) must be less than SEED_STRIDE. Increase SEED_STRIDE.")
     load_splits().check_trainer_cfg(tr["seed"], tr["num_iterations"], tr["num_sequences"])
 
     name = Path(args.config).stem
@@ -63,7 +63,7 @@ def main() -> None:
         yaml.safe_dump(cfg, fh, sort_keys=False, allow_unicode=True)
     save_json(run_metadata(config_file=args.config, train_seed_index=args.seed, trainer_seed=tr["seed"],
                            pyg_fallback=used_fallback), run_dir / "meta.json")
-    print(f"[train] bắt đầu: {run_dir}  (log: {run_dir / 'stdout' / 'main.out'})", flush=True)
+    print(f"[train] starting: {run_dir}  (log: {run_dir / 'stdout' / 'main.out'})", flush=True)
 
     from trainers import make_trainer  # import trễ: cần torch + torch_geometric
 

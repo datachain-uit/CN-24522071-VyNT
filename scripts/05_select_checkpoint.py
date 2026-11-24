@@ -1,10 +1,10 @@
-"""Bước 5 — Chọn checkpoint Decima tốt nhất trên tập VALIDATION + xuất learning curve.
+"""Step 5 - Select the best Decima checkpoint on the validation split and export the learning curve.
 
-Ví dụ:
+Example:
     python scripts/05_select_checkpoint.py --run results/train/decima_small/seed0 --env configs/env/tpch_small.yaml
-Đầu ra trong thư mục run: val_checkpoints.csv, best.json, learning_curve.csv, learning_curve.png
-Quy tắc: KHÔNG chọn checkpoint theo tập test; trainer upstream chỉ lưu "model tốt nhất trong n vòng gần nhất"
-theo số job trung bình trên rollout huấn luyện — ở đây chọn lại một cách độc lập trên validation.
+Output in the run directory: val_checkpoints.csv, best.json, learning_curve.csv, learning_curve.png
+Never select checkpoints on the test split. The upstream trainer saves the best model from the last n
+iterations by average job count during training rollouts. This script selects independently on validation.
 """
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ def learning_curve(run: Path) -> pd.DataFrame:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run", required=True)
-    ap.add_argument("--env", required=True, help="cấu hình môi trường dùng để đánh giá (cùng num_executors)")
+    ap.add_argument("--env", required=True, help="evaluation environment config (same num_executors as training)")
     ap.add_argument("--num-seeds", type=int, default=None)
     ap.add_argument("--pyg-fallback", action="store_true")
     args = ap.parse_args()
@@ -51,7 +51,7 @@ def main() -> None:
     cfg = load_yaml(str((run / "config.yaml").resolve()))
     env_cfg = load_yaml(args.env)
     if env_cfg["num_executors"] != cfg["env"]["num_executors"]:
-        raise SystemExit("num_executors của môi trường đánh giá khác lúc huấn luyện")
+        raise SystemExit("evaluation and training environments have different num_executors")
     seeds = load_splits().get("val").seeds()[: args.num_seeds]
 
     lc = learning_curve(run)
@@ -62,7 +62,7 @@ def main() -> None:
 
     ckpts = sorted((run / "checkpoints").glob("*/model.pt"), key=lambda p: int(p.parent.name))
     if not ckpts:
-        raise SystemExit(f"không tìm thấy checkpoint trong {run / 'checkpoints'}")
+        raise SystemExit(f"no checkpoints found in {run / 'checkpoints'}")
     rows = []
     for ck in ckpts:
         sched = make_decima(env_cfg["num_executors"], str(ck), agent_cfg=cfg["agent"], force_pyg_fallback=args.pyg_fallback)
@@ -70,12 +70,12 @@ def main() -> None:
         x = pd.DataFrame(eps)["avg_jct_s"]
         rows.append({"iteration": int(ck.parent.name), "path": str(ck), "val_mean_avg_jct_s": x.mean(),
                      "val_std": x.std(ddof=1), "n": len(x)})
-        print(f"checkpoint {ck.parent.name:>5}: val avg JCT = {x.mean():9.1f} ± {x.std(ddof=1):7.1f} s")
+        print(f"checkpoint {ck.parent.name:>5}: val avg JCT = {x.mean():9.1f} +/- {x.std(ddof=1):7.1f} s")
     df = pd.DataFrame(rows)
     df.to_csv(run / "val_checkpoints.csv", index=False)
     best = df.loc[df["val_mean_avg_jct_s"].idxmin()].to_dict()
     save_json(best, run / "best.json")
-    print(f"[select] checkpoint tốt nhất (validation): vòng {best['iteration']} -> {run / 'best.json'}")
+    print(f"[select] best checkpoint (validation): iteration {best['iteration']} -> {run / 'best.json'}")
 
 
 if __name__ == "__main__":

@@ -15,5 +15,5 @@ def debug_env_cfg():
     from rlsched.envs import load_yaml
 
     if not tpch_ready():
-        pytest.skip("chưa có dữ liệu TPC-H: chạy python scripts/00_setup_data.py")
+        pytest.skip("TPC-H data missing: run python scripts/00_setup_data.py")
     return load_yaml("configs/env/tpch_debug.yaml")

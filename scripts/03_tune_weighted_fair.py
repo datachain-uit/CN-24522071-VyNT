@@ -1,10 +1,10 @@
-"""Bước 3 — Tune alpha của Weighted-Fair trên tập VALIDATION (baseline tầng 2, "opt. weighted fair").
+"""Step 3 - Tune Weighted-Fair alpha on the validation split (tier 2 baseline, "opt. weighted fair").
 
-Decima quét alpha ∈ {-2, -1.9, ..., 2}. Mặc định ở đây quét bước 0.25 để chạy nhanh trên laptop;
-khi viết bài nên quét bước 0.1 và ghi rõ ngân sách tune (số giá trị x số seed) trong bài.
-Ví dụ:
+Decima searches alpha values in {-2, -1.9, ..., 2}. The default step here is 0.25 for quick laptop runs.
+For publication, use a step of 0.1 and report the tuning budget (number of values x number of seeds).
+Example:
     python scripts/03_tune_weighted_fair.py --env configs/env/tpch_small.yaml
-Đầu ra: results/tuning/<env>/weighted_fair_val.csv và best.json  ({"alpha": ..., ...})
+Output: results/tuning/<env>/weighted_fair_val.csv and best.json  ({"alpha": ..., ...})
 """
 from __future__ import annotations
 
@@ -49,14 +49,14 @@ def main() -> None:
         eps, _ = run_many(env_cfg, pol, seeds, label=pol.name)
         x = pd.DataFrame(eps)["avg_jct_s"]
         rows.append({"alpha": float(a), "mean_avg_jct_s": x.mean(), "std": x.std(ddof=1), "n": len(x)})
-        print(f"alpha={a:+.2f}  avg JCT = {x.mean():9.1f} ± {x.std(ddof=1):7.1f} s")
+        print(f"alpha={a:+.2f}  avg JCT = {x.mean():9.1f} +/- {x.std(ddof=1):7.1f} s")
     df = pd.DataFrame(rows)
     df.to_csv(out / "weighted_fair_val.csv", index=False)
     best = df.loc[df["mean_avg_jct_s"].idxmin()].to_dict()
     best.update({"weight": args.weight, "split": "val", "num_values_tried": len(alphas), "seeds": seeds})
     save_json(best, out / "best.json")
     save_json(run_metadata(env=env_cfg, alphas=alphas.tolist(), weight=args.weight), out / "meta.json")
-    print(f"[tune] alpha tốt nhất trên validation = {best['alpha']:+.2f} -> {out / 'best.json'}")
+    print(f"[tune] best alpha on validation = {best['alpha']:+.2f} -> {out / 'best.json'}")
 
 
 if __name__ == "__main__":

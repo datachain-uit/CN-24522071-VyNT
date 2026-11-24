@@ -19,7 +19,7 @@ def git_commit() -> str:
         dirty = subprocess.run(["git", "status", "--porcelain"], cwd=REPO_ROOT, capture_output=True, text=True).stdout
         return out.stdout.strip() + ("-dirty" if dirty.strip() else "")
     except Exception:  # noqa: BLE001
-        return "unknown (chưa phải git repo)"
+        return "unknown (not a git repository)"
 
 
 def versions() -> dict[str, str]:

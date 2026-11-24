@@ -42,7 +42,7 @@ def test_sparse_matmul_matches_dense():
 
 
 @pytest.mark.skipif(importlib.util.find_spec("torch_scatter") is None or "pyg_ext_fallback" in str(
-    getattr(importlib.util.find_spec("torch_scatter"), "origin", "")), reason="không có torch_scatter gốc để đối chiếu")
+    getattr(importlib.util.find_spec("torch_scatter"), "origin", "")), reason="native torch_scatter unavailable for comparison")
 def test_fallback_matches_real_torch_scatter():
     import torch_scatter as real
 

@@ -1,7 +1,7 @@
-"""Phân tích cú pháp mô tả phương pháp trên dòng lệnh: ``ten`` hoặc ``ten:khoa=gia_tri,khoa2=gia_tri2``.
+"""Parse command-line method specifications: ``name`` or ``name:key=value,key2=value2``.
 
-Ví dụ: fair | sjf_cp | srpt_cp | weighted_fair:alpha=-1 | weighted_fair:alpha=@results/tuning/tpch_small/best.json
-Giá trị bắt đầu bằng '@' được đọc từ file JSON (lấy khóa trùng tên, ví dụ "alpha").
+Examples: fair | sjf_cp | srpt_cp | weighted_fair:alpha=-1 | weighted_fair:alpha=@results/tuning/tpch_small/best.json
+For values starting with '@', read the matching key (e.g. "alpha") from the specified JSON file.
 """
 from __future__ import annotations
 

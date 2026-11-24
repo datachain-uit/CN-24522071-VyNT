@@ -90,10 +90,10 @@ def fetch_tpch(method: str = "auto", local_clone: str | None = None, dst: Path =
             {"git": fetch_with_git, "zip": fetch_with_zip, "upstream": fetch_upstream}[m](dst)
             if tpch_ready(dst):
                 return m
-            errors.append(f"{m}: thiếu {len(missing_files(dst))} file sau khi tải")
+            errors.append(f"{m}: {len(missing_files(dst))} files missing after download")
         except Exception as exc:  # noqa: BLE001 - báo lỗi gộp ở cuối
             errors.append(f"{m}: {exc!r}")
-    raise RuntimeError("Không tải được dữ liệu TPC-H:\n  " + "\n  ".join(errors))
+    raise RuntimeError("Could not download TPC-H data:\n  " + "\n  ".join(errors))
 
 
 # ----------------------------------------------------------------------------- thống kê job template
@@ -154,7 +154,7 @@ def critical_path(children: list[list[int]], weight: np.ndarray) -> np.ndarray:
             if indeg[u] == 0:
                 stack.append(u)
     if len(order) != n:
-        raise ValueError("đồ thị có chu trình — không phải DAG")
+        raise ValueError("graph contains a cycle and is not a DAG")
     cp = np.zeros(n)
     for v in reversed(order):
         cp[v] = weight[v] + max((cp[u] for u in children[v]), default=0.0)

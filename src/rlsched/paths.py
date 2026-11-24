@@ -57,8 +57,8 @@ def enable_pyg_fallback(force: bool = False) -> bool:
     # còn biến môi trường giúp script con biết đang dùng bản thay thế
     os.environ["RLSCHED_PYG_FALLBACK"] = "1"
     warnings.warn(
-        "Đang dùng bản thay thế thuần PyTorch cho torch_scatter/torch_sparse "
-        "(third_party/pyg_ext_fallback). Kết quả tương đương về toán học nhưng chậm hơn.",
+        "Using the pure PyTorch fallback for torch_scatter/torch_sparse "
+        "(third_party/pyg_ext_fallback). Results are mathematically equivalent but computation is slower.",
         stacklevel=2,
     )
     return True

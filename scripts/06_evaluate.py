@@ -1,12 +1,12 @@
-"""Bước 6 — Đánh giá CUỐI CÙNG trên tập TEST (chạy một lần cho bảng kết quả).
+"""Step 6 - Run the final evaluation on the test split once for the results table.
 
-Ví dụ:
+Example:
     python scripts/06_evaluate.py --env configs/env/tpch_small.yaml \
         --methods random fifo fair sjf_cp srpt_cp \
                   "weighted_fair:alpha=@results/tuning/tpch_small/best.json" \
         --decima-runs results/train/decima_small/seed0 results/train/decima_small/seed1 results/train/decima_small/seed2
-Đầu ra: results/final/<env>_test/{episodes.csv, jobs.csv, meta.json}
-Thư mục đích đã có kết quả thì script dừng (tránh "nhìn trộm" test nhiều lần); dùng --force nếu thật sự cần.
+Output: results/final/<env>_test/{episodes.csv, jobs.csv, meta.json}
+The script stops if results already exist to prevent repeated looks at the test split. Use --force only if necessary.
 """
 from __future__ import annotations
 
@@ -33,7 +33,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--env", required=True)
     ap.add_argument("--methods", nargs="*", default=["random", "fifo", "fair", "sjf_cp", "srpt_cp"])
-    ap.add_argument("--decima-runs", nargs="*", default=[], help="các thư mục run đã có best.json (bước 5)")
+    ap.add_argument("--decima-runs", nargs="*", default=[], help="run directories containing best.json from step 5")
     ap.add_argument("--decima-label", default="Decima")
     ap.add_argument("--split", choices=["test", "val"], default="test")
     ap.add_argument("--num-seeds", type=int, default=None)
@@ -46,8 +46,8 @@ def main() -> None:
     seeds = load_splits().get(args.split).seeds()[: args.num_seeds]
     out = Path(args.out or RESULTS_DIR / "final" / f"{env_cfg.get('name', Path(args.env).stem)}_{args.split}")
     if (out / "episodes.csv").exists() and not args.force:
-        raise SystemExit(f"{out} đã có kết quả. Tập test chỉ nên dùng một lần; thêm --force nếu có lý do chính đáng "
-                         "(và ghi lại lý do trong nhật ký thực nghiệm).")
+        raise SystemExit(f"{out} already contains results. Use the test split only once. Override with --force only if justified "
+                         "(document the reason in the experiment log).")
     out.mkdir(parents=True, exist_ok=True)
 
     eps_all, jobs_all = [], []
@@ -82,7 +82,7 @@ def main() -> None:
     save_json(run_metadata(env=env_cfg, split=args.split, seeds=seeds, methods=args.methods,
                            decima_runs=args.decima_runs), out / "meta.json")
     print(eps_df.groupby("method")["avg_jct_s"].agg(["mean", "std", "count"]).round(1).to_string())
-    print(f"[evaluate] đã ghi {out}. Bước tiếp theo: python scripts/07_analyze.py --in {out}")
+    print(f"[evaluate] wrote results to {out}. Next step: python scripts/07_analyze.py --in {out}")
 
 
 if __name__ == "__main__":
